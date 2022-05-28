@@ -2,14 +2,22 @@ package function;
 
 public class PrintPrimes {
 
+    private static final int NUMBER_OF_PRIMES = 1000;
+
     public void main(String[] args) {
-        new PrimePrintHelper().invoke(1000, 30);
+        PrimePrintHelper primePrintHelper = new PrimePrintHelper();
+        int[] primeNumbers = primePrintHelper.primeNumbers(NUMBER_OF_PRIMES);
+        primePrintHelper.printNumbers(NUMBER_OF_PRIMES, primeNumbers);
+
+
     }
 
     public class PrimePrintHelper {
 
+        private static final int ordmax = 30;
 
-        private void invoke(final int numberOfPrimes, final int ordmax) {
+        private int[] primeNumbers(final int numberOfPrimes) {
+
             int[] primes = new int[numberOfPrimes + 1];
             int[] multiples = new int[ordmax + 1];
 
@@ -42,7 +50,7 @@ public class PrintPrimes {
                 primeIndex = primeIndex + 1;
                 primes[primeIndex] = candidate;
             }
-            printNumbers(numberOfPrimes, primes);
+            return primes;
         }
 
         private void printNumbers(int numberOfPrimes, int[] numbers) {
