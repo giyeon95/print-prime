@@ -1,9 +1,11 @@
 package function;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import static org.junit.Assert.assertEquals;
 
 public class FileContentComparator {
     public void compare() {
@@ -13,7 +15,7 @@ public class FileContentComparator {
             String line;
             while ((line = gold.readLine()) != null)
                 assertEquals(line, lead.readLine());
-            assertEquals(null, lead.readLine());
+            assertNull(lead.readLine());
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

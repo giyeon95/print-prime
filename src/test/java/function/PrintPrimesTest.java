@@ -1,13 +1,12 @@
 package function;
 
-import org.junit.Test;
-
 import java.io.IOException;
+import org.junit.jupiter.api.Test;
 
-public class PrintPrimesTest {
+class PrintPrimesTest {
+
     @Test
-    public void
-    makeSureMatchesGold() throws IOException {
+    void makeSureMatchesGold() throws IOException {
         PrintPrimes.main(new String[0]);
     }
 }
