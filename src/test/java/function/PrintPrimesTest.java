@@ -32,7 +32,7 @@ class PrintPrimesTest {
 
     @Test
     void makeSureMatchesGold() throws IOException {
-        PrintPrimes.main(new String[0]);
+        new PrintPrimes().main(new String[0]);
         BufferedReader lead = new BufferedReader(new FileReader("lead"));
         BufferedReader gold = new BufferedReader(new FileReader("src/test/java/function/gold"));
 
