@@ -3,35 +3,23 @@ package function;
 public class PrintPrimes {
 
     public void main(String[] args) {
-        new PrimePrintHelper().invoke();
+        new PrimePrintHelper().invoke(1000, 30);
     }
 
     public class PrimePrintHelper {
 
-        private final int numberOfPrimes = 1000;
-        private final int linesPerPage = 50;
-        private final int columns = 4;
-        private final int ordmax = 30;
-        private int[] primes = new int[numberOfPrimes + 1];
-        private int pagenumber;
-        private int pageoffset;
-        private int rowoffset;
-        private int column;
-        private int candidate;
-        private int primeIndex;
-        private boolean possiblyPrime;
-        private int ord;
-        private int square;
-        private int n;
-        private int[] multiples = new int[ordmax + 1];
 
-        private void invoke() {
-            candidate = 1;
-            primeIndex = 1;
+        private void invoke(final int numberOfPrimes, final int ordmax) {
+            int[] primes = new int[numberOfPrimes + 1];
+            int[] multiples = new int[ordmax + 1];
+
+            int candidate = 1;
+            int primeIndex = 1;
             primes[1] = 2;
-            ord = 2;
-            square = 9;
+            int ord = 2;
+            int square = 9;
             while (primeIndex < numberOfPrimes) {
+                boolean possiblyPrime;
                 do {
                     candidate = candidate + 2;
                     if (candidate == square) {
@@ -39,7 +27,7 @@ public class PrintPrimes {
                         square = primes[ord] * primes[ord];
                         multiples[ord - 1] = candidate;
                     }
-                    n = 2;
+                    int n = 2;
                     possiblyPrime = true;
                     while (n < ord && possiblyPrime) {
                         while (multiples[n] < candidate) {
@@ -54,19 +42,23 @@ public class PrintPrimes {
                 primeIndex = primeIndex + 1;
                 primes[primeIndex] = candidate;
             }
-            printNumbers();
+            printNumbers(numberOfPrimes, primes);
         }
 
-        private void printNumbers() {
-            pagenumber = 1;
-            pageoffset = 1;
+        private void printNumbers(int numberOfPrimes, int[] numbers) {
+            int pagenumber = 1;
+            int pageoffset = 1;
+            int linesPerPage = 50;
+            int columns = 4;
+
             while (pageoffset <= numberOfPrimes) {
                 System.out.println("The First " + numberOfPrimes + " Prime Numbers --- Page " + pagenumber);
-                System.out.println("");
-                for (rowoffset = pageoffset; rowoffset < pageoffset + linesPerPage; rowoffset++) {
-                    for (column = 0; column < columns; column++) {
+                System.out.println();
+
+                for (int rowoffset = pageoffset; rowoffset < pageoffset + linesPerPage; rowoffset++) {
+                    for (int column = 0; column < columns; column++) {
                         if (rowoffset + column * linesPerPage <= numberOfPrimes) {
-                            System.out.format("%10d", primes[rowoffset + column * linesPerPage]);
+                            System.out.format("%10d", numbers[rowoffset + column * linesPerPage]);
                         }
                     }
                     System.out.println();
