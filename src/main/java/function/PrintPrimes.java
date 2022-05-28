@@ -5,55 +5,65 @@ public class PrintPrimes {
     private static final int NUMBER_OF_PRIMES = 1000;
 
     public void main(String[] args) {
-        PrimePrintHelper primePrintHelper = new PrimePrintHelper();
-        int[] primeNumbers = primePrintHelper.primeNumbers(NUMBER_OF_PRIMES);
-        primePrintHelper.printNumbers(NUMBER_OF_PRIMES, primeNumbers);
-
+        int[] primeNumbers = new PrimeGenerator().generatePrimeNumber(NUMBER_OF_PRIMES);
+        new NumberPrinter().print(NUMBER_OF_PRIMES, primeNumbers);
 
     }
 
-    public class PrimePrintHelper {
+    public class PrimeGenerator {
 
         private static final int ordmax = 30;
 
-        private int[] primeNumbers(final int numberOfPrimes) {
+        private int candidate = 1;
+        private int ord = 2;
+        private int square = 9;
+        private int[] primes;
+        private int[] multiples;
 
-            int[] primes = new int[numberOfPrimes + 1];
-            int[] multiples = new int[ordmax + 1];
 
-            int candidate = 1;
+        private int[] generatePrimeNumber(final int numberOfPrimes) {
+
+            primes = new int[numberOfPrimes + 1];
+            multiples = new int[ordmax + 1];
+
             int primeIndex = 1;
             primes[1] = 2;
-            int ord = 2;
-            int square = 9;
+
             while (primeIndex < numberOfPrimes) {
-                boolean possiblyPrime;
-                do {
-                    candidate = candidate + 2;
-                    if (candidate == square) {
-                        ord = ord + 1;
-                        square = primes[ord] * primes[ord];
-                        multiples[ord - 1] = candidate;
-                    }
-                    int n = 2;
-                    possiblyPrime = true;
-                    while (n < ord && possiblyPrime) {
-                        while (multiples[n] < candidate) {
-                            multiples[n] = multiples[n] + primes[n] + primes[n];
-                        }
-                        if (multiples[n] == candidate) {
-                            possiblyPrime = false;
-                        }
-                        n = n + 1;
-                    }
-                } while (!possiblyPrime);
+                findNextPrime();
                 primeIndex = primeIndex + 1;
                 primes[primeIndex] = candidate;
             }
             return primes;
         }
 
-        private void printNumbers(int numberOfPrimes, int[] numbers) {
+        private void findNextPrime() {
+            boolean possiblyPrime;
+            do {
+                candidate = candidate + 2;
+                if (candidate == square) {
+                    ord = ord + 1;
+                    square = primes[ord] * primes[ord];
+                    multiples[ord - 1] = candidate;
+                }
+                int n = 2;
+                possiblyPrime = true;
+                while (n < ord && possiblyPrime) {
+                    while (multiples[n] < candidate) {
+                        multiples[n] = multiples[n] + primes[n] + primes[n];
+                    }
+                    if (multiples[n] == candidate) {
+                        possiblyPrime = false;
+                    }
+                    n = n + 1;
+                }
+            } while (!possiblyPrime);
+        }
+    }
+
+    private class NumberPrinter {
+
+        private void print(int numberOfPrimes, int[] numbers) {
             int pagenumber = 1;
             int pageoffset = 1;
             int linesPerPage = 50;
